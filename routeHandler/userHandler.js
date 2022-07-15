@@ -5,11 +5,17 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const userSchema = require("../schemas/userSchema");
 const User = new mongoose.model("User", userSchema);
+const pageSchema = require("../schemas/pageSchema");
+const Page = new mongoose.model("Page", pageSchema);
+const checkLogin = require("../middlewares/checkLogin");
 
 // SIGNUP
+let email;
 router.post("/auth/register", async(req, res) => {
     try {
+        
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        email = req.body.email;
         const newUser = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -61,6 +67,23 @@ router.post("/auth/login", async(req, res) => {
         });
     }
 });
+
+//create a page
+
+router.post("/page/create",checkLogin, (req, res) => {
+    const newPage = new Page(req.body);
+    newPage.save((err) => {
+      if (err) {
+        res.status(500).json({
+          error: "There was a server side error!",
+        });
+      } else {
+        res.status(200).json({
+          message: "Page was created successfully",
+        });
+      }
+    });
+  });
 
 
 
