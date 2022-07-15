@@ -25,6 +25,43 @@ router.post("/auth/register", async(req, res) => {
     }
 });
 
+// LOGIN
+router.post("/auth/login", async(req, res) => {
+    try {
+        const user = await User.find({ email: req.body.email });
+        if(user && user.length > 0) {
+            const isValidPassword = await bcrypt.compare(req.body.password, user[0].password);
+
+            if(isValidPassword) {
+                // generate token
+                const token = jwt.sign({
+                    email: user[0].email,
+                    userId: user[0]._id,
+                }, process.env.JWT_SECRET, {
+                    expiresIn: '2d'
+                });
+
+                res.status(200).json({
+                    "Bearer authorization token": token,
+                    "user Object": user[0],
+                });
+            } else {
+                res.status(401).json({
+                    "error": "Authetication failed!"
+                });
+            }
+        } else {
+            res.status(401).json({
+                "error": "Authetication failed!"
+            });
+        }
+    } catch {
+        res.status(401).json({
+            "error": "Authetication failed! problem in main block"
+        });
+    }
+});
+
 
 
 module.exports = router;
