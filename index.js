@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userHandler = require("./routeHandler/userHandler");
+const followListHandler = require("./routeHandler/followListHandler");
+const PageHandler = require("./routeHandler/pageHandler");
+const postHandler = require("./routeHandler/postHandler");
 
 
 // express app initialization
@@ -20,7 +23,9 @@ mongoose
 
 // application routes
 app.use("/api", userHandler);
-// app.use("/api", followListHandler);
+app.use("/api", followListHandler);
+app.use("/api", PageHandler);
+app.use("/api", postHandler);
 
 // default error handler
 const errorHandler = (err, req, res, next) => {

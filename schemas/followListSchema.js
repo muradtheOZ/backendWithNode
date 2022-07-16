@@ -5,7 +5,7 @@ const followListSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  followersId:{
+  following:{
     type: String,
     required: true
   },
