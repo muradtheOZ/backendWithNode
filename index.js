@@ -5,6 +5,7 @@ const userHandler = require("./routeHandler/userHandler");
 const followListHandler = require("./routeHandler/followListHandler");
 const PageHandler = require("./routeHandler/pageHandler");
 const postHandler = require("./routeHandler/postHandler");
+const newsFeedHandler = require("./routeHandler/newsFeedHandler");
 
 
 // express app initialization
@@ -26,6 +27,7 @@ app.use("/api", userHandler);
 app.use("/api", followListHandler);
 app.use("/api", PageHandler);
 app.use("/api", postHandler);
+app.use("/api", newsFeedHandler);
 
 // default error handler
 const errorHandler = (err, req, res, next) => {

@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
-const followListSchema = mongoose.Schema({
+const followPageSchema = mongoose.Schema({
   userId: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true
   },
   following:{
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true
   },
   date: {
@@ -15,4 +15,4 @@ const followListSchema = mongoose.Schema({
   }
 });
 
-module.exports = followListSchema;
+module.exports = followPageSchema;
