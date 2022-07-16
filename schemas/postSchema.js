@@ -8,6 +8,9 @@ const postSchema = mongoose.Schema({
   userId:{
     type: String
   },
+  pageId:{
+    type: String
+  },
   followerId:[{
     userId: {
       type: mongoose.Types.ObjectId,
