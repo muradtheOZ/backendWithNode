@@ -70,7 +70,10 @@ router.post("/auth/login", async(req, res) => {
 
 //create a page
 router.post("/page/create",checkLogin, (req, res) => {
-    const newPage = new Page(req.body);
+    const newPage = new Page({
+      "name":req.body.name,
+      "userId":req.userId
+    });
     newPage.save((err) => {
       if (err) {
         res.status(500).json({
@@ -87,7 +90,11 @@ router.post("/page/create",checkLogin, (req, res) => {
 
 //create a post
 router.post("/person/attach-post",checkLogin, (req, res) => {
-    const newPost = new Post(req.body);
+    const newPost = new Post({
+      "userId":req.userId,
+      "content":req.body.content,
+    });
+    // console.log(req.email,req.userId)
     newPost.save((err) => {
       if (err) {
         res.status(500).json({

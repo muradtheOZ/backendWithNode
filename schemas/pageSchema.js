@@ -5,12 +5,12 @@ const pageSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  userId:{
+    type: String
+  },
   date: {
     type: Date,
     default: Date.now,
-  },
-  email:{
-    type: String,
   }
 });
 
