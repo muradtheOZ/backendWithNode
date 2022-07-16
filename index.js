@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userHandler = require("./routeHandler/userHandler");
 
+
 // express app initialization
 const app = express();
 dotenv.config()
@@ -19,6 +20,7 @@ mongoose
 
 // application routes
 app.use("/api", userHandler);
+// app.use("/api", followListHandler);
 
 // default error handler
 const errorHandler = (err, req, res, next) => {
