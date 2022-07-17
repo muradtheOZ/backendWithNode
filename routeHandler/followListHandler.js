@@ -5,6 +5,8 @@ const followListSchema = require("../schemas/followListSchema");
 const FollowList = new mongoose.model("FollowList", followListSchema);
 const followPageSchema = require("../schemas/followPageSchema");
 const FollowPage = new mongoose.model("FollowPage", followPageSchema);
+const postSchema = require("../schemas/postSchema");
+const Post = new mongoose.model("Post", postSchema);
 const checkLogin = require("../middlewares/checkLogin");
 const ObjectId = require('mongodb').ObjectId;
 
@@ -25,6 +27,11 @@ router.post("/follow/person/:personId",checkLogin, async(req, res) => {
         });
       }
     });
+
+    // adding the follower list data on every post that user has
+    await Post.updateMany({userId: req.params.personId},{
+      $push: {followerId: newFollowList}
+    })
   });
 
   //follow page
@@ -45,6 +52,10 @@ router.post("/follow/person/:personId",checkLogin, async(req, res) => {
         });
       }
     });
+    // adding the follower list data on every post that page has
+    await Post.updateMany({userId: req.params.pageId},{
+      $push: {followerId: newFollowPage}
+    })
   });
 
   module.exports = router;
