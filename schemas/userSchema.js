@@ -16,7 +16,13 @@ const userSchema = mongoose.Schema({
   password: {
       type: String,
       required: true,
-  }
+  },
+  followingList:[
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "FollowList",
+    }
+  ]
 });
 
 module.exports = userSchema;

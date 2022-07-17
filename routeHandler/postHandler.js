@@ -38,39 +38,49 @@ router.post("/person/attach-post", checkLogin, async (req, res) => {
 
 //create a new page post
 router.post("/page/:pageId/attach-post", checkLogin, async (req, res) => {
-  const pageIsValid = await Page.find({ _id: req.params.pageId });
-  console.log(pageIsValid, pageIsValid.length);
-  //checking is the page exist in database or not
-  if (pageIsValid.length >= 1) {
-    //checking loggedIn person is owner of the page or not
-    if (pageIsValid[0].userId == req.userId) {
-      const data = await FollowPage.find({ following: req.params.pageId });
-      const newPost = new Post({
-        userId: ObjectId(req.params.pageId),
-        content: req.body.content,
-        followerId: data,
-      });
-
-      await newPost.save((err) => {
-        if (err) {
-          res.status(500).json({
-            error: "There was a server side error!",
-          });
-        } else {
-          res.status(200).json({
-            message: "Post was created successfully",
-          });
-        }
-      });
-    } else {
-      res.status(500).json({
-        message: "You are not authorized to post on this page",
-      });
-    }
-  } else {
+  //checking page BSON is in right formate or not for stooping it from crashing.
+  if ((req.params.pageId).toString().length < 24) {
     res.status(500).json({
-      message: "please give correct page Id",
+      message: "Page does not exist(wrong BSON!)",
     });
   }
+  else{
+    const pageIsValid = await Page.find({ _id: req.params.pageId });
+    console.log(pageIsValid, pageIsValid.length,(pageIsValid[0]._id).toString().length);
+    //checking is the page exist in database or not
+    if (pageIsValid.length >= 1) {
+      //checking loggedIn person is owner of the page or not
+      if (pageIsValid[0].userId == req.userId) {
+        const data = await FollowPage.find({ following: req.params.pageId });
+        const newPost = new Post({
+          userId: ObjectId(req.params.pageId),
+          content: req.body.content,
+          followerId: data,
+        });
+  
+        await newPost.save((err) => {
+          if (err) {
+            res.status(500).json({
+              error: "There was a server side error!",
+            });
+          } else {
+            res.status(200).json({
+              message: "Post was created successfully",
+            });
+          }
+        });
+      } else {
+        res.status(500).json({
+          message: "You are not authorized to post on this page",
+        });
+      }
+    
+    } else {
+      res.status(500).json({
+        message: "please give correct page Id",
+      });
+    }
+  }
+  
 });
 module.exports = router;
