@@ -8,6 +8,9 @@ const postSchema = mongoose.Schema({
   userId:{
     type: String
   },
+  ownerId:{
+    type: String
+  },
   pageId:{
     type: String
   },

@@ -8,6 +8,12 @@ const pageSchema = mongoose.Schema({
   userId:{
     type: String
   },
+  followerId:[
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "FollowList",
+    }
+],
   date: {
     type: Date,
     default: Date.now,
