@@ -13,14 +13,27 @@ const app = express();
 dotenv.config()
 app.use(express.json());
 
-// database connection with mongoose
-mongoose
-  .connect("mongodb://localhost/api", {
+// database connection with mongoose here I made it with cloud mongoDB with my cloud cluster
+const username = "muradtheoz";
+
+mongoose.connect(
+  `mongodb+srv://${username}:${process.env.password}@${process.env.cluster}.mongodb.net/${process.env.dbname}?retryWrites=true&w=majority`, 
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("connection successful"))
   .catch((err) => console.log(err));
+
+// Local database connection with mongoose please comment above code and uncomment below code. if you want to use local database 
+
+// mongoose
+//   .connect("mongodb://localhost/api", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("connection successful"))
+//   .catch((err) => console.log(err));
 
 // application routes
 app.use("/api", userHandler);
