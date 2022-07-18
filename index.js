@@ -25,7 +25,7 @@ mongoose.connect(
   .then(() => console.log("connection successful"))
   .catch((err) => console.log(err));
 
-// Local database connection with mongoose please comment above code and uncomment below code. if you want to use local database 
+// Local database connection with mongoose. Please comment above code and uncomment below code. if you want to use local database 
 
 // mongoose
 //   .connect("mongodb://localhost/api", {
