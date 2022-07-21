@@ -12,6 +12,6 @@ ___
 ### Technology Used
 - Node.js
 - Express.js
-- MongoDBon
+- MongoDB
 - JWT Token
 
