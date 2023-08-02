@@ -15,14 +15,10 @@ const postSchema = mongoose.Schema({
     type: String
   },
   followerId:[{
-    userId: {
-      type: mongoose.Types.ObjectId,
-    },
-    following:{
-      type: mongoose.Types.ObjectId,
-    }
+    type: Object
   }
-],
+    
+  ],
   date: {
     type: Date,
     default: Date.now,
